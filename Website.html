@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeedBox College Clubs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --feed-blue: #29abe2;
+            --box-blue: #0171bc;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(41, 171, 226, 0.1);
+        }
+        
+        .glass-dark {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 40px rgba(1, 113, 188, 0.15);
+        }
+        
+        .glass-blue {
+            background: rgba(41, 171, 226, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(41, 171, 226, 0.2);
+        }
+        
+        /* Smooth floating bubbles */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float-bubble 15s infinite linear;
+        }
+        
+        .bubble-1 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(41, 171, 226, 0.3), rgba(1, 113, 188, 0.2));
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .bubble-2 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(1, 113, 188, 0.2), rgba(41, 171, 226, 0.3));
+            left: 70%;
+            animation-delay: -5s;
+        }
+        
+        .bubble-3 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(41, 171, 226, 0.4), rgba(255, 255, 255, 0.3));
+            left: 30%;
+            animation-delay: -10s;
+        }
+        
+        .bubble-4 {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(1, 113, 188, 0.3), rgba(41, 171, 226, 0.2));
+            left: 85%;
+            animation-delay: -7s;
+        }
+        
+        .bubble-5 {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(41, 171, 226, 0.3));
+            left: 50%;
+            animation-delay: -12s;
+        }
+        
+        @keyframes float-bubble {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+        
+        /* Smooth animations */
+        .animate-slide-up {
+            animation: slideUp 1s ease-out forwards;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .animate-scale-in {
+            animation: scaleIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Interactive hover effects */
+        .hover-glow {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 20px 40px rgba(41, 171, 226, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(1, 113, 188, 0.2);
+        }
+        
+        .gradient-text-feed {
+            color: #29abe2;
+        }
+        
+        .gradient-text-box {
+            color: #0171bc;
+        }
+        
+        .text-college-clubs {
+            color: #0171bc;
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+            color: #1e293b;
+        }
+        
+        .nav-item:hover {
+            color: #29abe2;
+            transform: translateY(-2px);
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #29abe2, #0171bc);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        
+        .team-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .team-card:hover::before {
+            left: 100%;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(41, 171, 226, 0.2);
+        }
+        
+        .calendar-day {
+            transition: all 0.3s ease;
+            color: #1e293b;
+        }
+        
+        .calendar-day:hover {
+            background: rgba(41, 171, 226, 0.2);
+            transform: scale(1.1);
+            border-radius: 50%;
+            color: #0171bc;
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(41, 171, 226, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(41, 171, 226, 0.5); }
+        }
+        
+        /* Interactive button effects */
+        .btn-interactive {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-interactive::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-interactive:hover::before {
+            left: 100%;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Text colors for light background */
+        .text-dark {
+            color: #1e293b;
+        }
+        
+        .text-gray-dark {
+            color: #475569;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <!-- Floating Bubbles Background -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+        <div class="bubble bubble-5"></div>
+    </div>
+
+    <!-- Navigation -->
+        <nav class="fixed top-0 w-full z-50 glass">
+            <div class="container mx-auto px-6 py-5">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                <img src="src/FEEDBOXLOGO.png" 
+                    alt="FeedBox College Clubs Logo" 
+                    class="h-12 md:h-16 w-auto">
+                </div>
+        
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-10">
+                <a href="#home" class="nav-item cursor-pointer font-medium">Home</a>
+                <a href="#about" class="nav-item cursor-pointer font-medium">About</a>
+                <a href="#events" class="nav-item cursor-pointer font-medium">Events</a>
+                <a href="#gallery" class="nav-item cursor-pointer font-medium">Gallery</a>
+                <a href="#team" class="nav-item cursor-pointer font-medium">Team</a>
+                </div>
+        
+                <!-- Mobile Menu Button -->
+                <button id="menu-btn" class="md:hidden text-dark hover:text-blue-600 transition-colors focus:outline-none">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                </button>
+            </div>
+        
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" 
+                class="hidden flex-col mt-4 space-y-4 md:hidden 
+                        opacity-0 transition-opacity duration-300 ease-in-out">
+                <a href="#home" class="nav-item block font-medium">Home</a>
+                <a href="#about" class="nav-item block font-medium">About</a>
+                <a href="#events" class="nav-item block font-medium">Events</a>
+                <a href="#gallery" class="nav-item block font-medium">Gallery</a>
+                <a href="#team" class="nav-item block font-medium">Team</a>
+            </div>
+            </div>
+        </nav>
+        
+        <!-- Script -->
+        <script>
+            const menuBtn = document.getElementById("menu-btn");
+            const mobileMenu = document.getElementById("mobile-menu");
+        
+            menuBtn.addEventListener("click", () => {
+            if (mobileMenu.classList.contains("hidden")) {
+                mobileMenu.classList.remove("hidden");
+                setTimeout(() => {
+                mobileMenu.classList.add("opacity-100");
+                mobileMenu.classList.remove("opacity-0");
+                }, 10); // slight delay to trigger transition
+            } else {
+                mobileMenu.classList.add("opacity-0");
+                mobileMenu.classList.remove("opacity-100");
+                setTimeout(() => {
+                mobileMenu.classList.add("hidden");
+                }, 300); // matches duration-300
+            }
+            });
+        </script>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative">
+        <div class="container mx-auto px-6 text-center relative z-10">
+        <div class="animate-slide-up">
+            <div class="mb-8">
+            <div class="flex justify-center mb-8">
+                <img src="src/FEEDBOXLOGO.png" 
+                    alt="FeedBox College Clubs Logo" 
+                    class="h-32 md:h-48 w-auto">
+            </div>
+            </div>
+            <p class="text-2xl text-gray-dark mb-12 max-w-4xl mx-auto leading-relaxed">
+            Empowering students through innovation, collaboration, and endless possibilities. 
+            Join our vibrant community and shape the future together.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <!-- UPDATED BUTTON: Now scrolls to events -->
+            <a href="#events" 
+                class="glass-blue btn-interactive px-10 py-5 rounded-full text-xl font-semibold hover-glow cursor-pointer pulse-glow text-white" 
+                style="background: linear-gradient(135deg, #29abe2, #0171bc);">
+                Explore Events
+            </a>
+            </div>
+        </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg class="w-8 h-8" style="color: #29abe2;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+        </div>
+    </section>
+  
+
+    <!-- About Our Clubs Section -->
+    <section id="about" class="py-24 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 animate-fade-in">
+                <h2 class="text-6xl font-bold mb-8">
+                    <span class="gradient-text-feed">About Our</span> <span class="gradient-text-box">Clubs</span>
+                </h2>
+                <p class="text-2xl text-gray-dark max-w-4xl mx-auto leading-relaxed">
+                    FeedBox College Clubs is more than just an organization – we're a thriving ecosystem of passionate students 
+                    dedicated to innovation, learning, and community building.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+                <div class="animate-scale-in">
+                    <h3 class="text-4xl font-bold mb-8" style="color: #29abe2;">Our Vision</h3>
+                    <p class="text-xl text-gray-dark mb-8 leading-relaxed">
+                        Feedbox envisions a future where college students are equipped with essential digital and technical skills and connected to global networks, empowering them to thrive in diverse industries and become influential leaders of tomorrow.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-4 h-4 rounded-full" style="background: #29abe2;"></div>
+                            <span class="text-lg text-gray-dark">Innovation-driven projects and initiatives</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-4 h-4 rounded-full" style="background: #0171bc;"></div>
+                            <span class="text-lg text-gray-dark">Collaborative learning environment</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-4 h-4 rounded-full" style="background: #29abe2;"></div>
+                            <span class="text-lg text-gray-dark">Industry connections and mentorship</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-dark rounded-3xl p-8 hover-lift">
+                    <div class="relative rounded-2xl h-80 overflow-hidden flex items-center justify-center group">
+                      <!-- Image -->
+                      <img src="src/3af584bf-465e-4196-9a1c-6cd8fe1769f2.jpg" 
+                           alt="Event Image" 
+                           class="w-full h-full object-cover rounded-2xl" />
+                  
+                      <!-- Neon Glow Border -->
+                      <div class="absolute inset-0 rounded-2xl border-2 border-cyan-400 animate-pulse-neon group-hover:shadow-[0_0_35px_#00e5ff] transition-all duration-500"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- Extra Styling -->
+                  <style>
+                    @keyframes pulseNeon {
+                      0%, 100% {
+                        box-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff, 0 0 30px #00e5ff;
+                      }
+                      50% {
+                        box-shadow: 0 0 20px #00e5ff, 0 0 40px #00e5ff, 0 0 60px #00e5ff;
+                      }
+                    }
+                    .animate-pulse-neon {
+                      animation: pulseNeon 2s infinite;
+                    }
+                  </style>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="glass rounded-3xl p-10 hover-glow text-center">
+                    <div class="text-6xl mb-6">💡</div>
+                    <h3 class="text-3xl font-bold mb-6" style="color: #29abe2;">Tech Enthusiasts</h3>
+                    <p class="text-gray-dark text-lg leading-relaxed">
+                        Feedbox attracts students passionate about technology, offering sessions in web development, app development, and coding by fostering a culture of innovation and skill-sharing.
+                    </p>
+                </div>
+                <div class="glass rounded-3xl p-10 hover-glow text-center">
+                    <div class="text-6xl mb-6">🤝</div>
+                    <h3 class="text-3xl font-bold mb-6" style="color: #0171bc;">Creative Designers</h3>
+                    <p class="text-gray-dark text-lg leading-relaxed">
+                        Feedbox college clubs provide a platform for aspiring graphic designers, video editors, and UI/UX designers to showcase their talents and refine their skills, building a supportive network of creatives.
+                    </p>
+                </div>
+                <div class="glass rounded-3xl p-10 hover-glow text-center">
+                    <div class="text-6xl mb-6">🎯</div>
+                    <h3 class="text-3xl font-bold mb-6" style="color: #29abe2;">Entrepreneurial Minds</h3>
+                    <p class="text-gray-dark text-lg leading-relaxed">
+                        Feedbox nurtures the entrepreneurial spirit among its members, offering guidance and support for startup ventures and fostering an ecosystem of entrepreneurship and innovation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-4xl mx-auto mb-12">
+  
+        <!-- Upcoming Events Section -->
+        <section id="events" class="py-20">
+            <!-- Section Heading -->
+            <h2 class="text-4xl font-extrabold text-center mb-12 tracking-widest text-[#0171bc] drop-shadow-lg">
+            🚀 Upcoming Event
+            </h2>
+        
+            <!-- Event Posters Grid -->
+            <div class="grid md:grid-cols-2 gap-10">
+                
+            <!-- Event Poster 1 as Button -->
+            <a href="event.html" 
+                class="relative group rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-105 hover:shadow-[0_0_35px_#29abe2] block">
+                <img src="src/PHOTO-2025-09-01-13-37-18.jpg" 
+                    alt="SPARKRUSH'25 Poster" 
+                    class="w-full h-[36rem] object-cover rounded-2xl">
+            </a>
+        
+            <!-- Event Poster 2 as Button -->
+            <a href="event.html" 
+                class="relative group rounded-2xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-105 hover:shadow-[0_0_35px_#29abe2] block">
+                <img src="src/PHOTO-2025-09-01-13-37-19.jpg" 
+                    alt="SPARKRUSH'25 Highlights" 
+                    class="w-full h-[36rem] object-cover rounded-2xl">
+            </a>        
+        
+            </div>
+        </section>
+  
+  <!-- Smooth Scroll CSS -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+    <!-- Past Event Pictures Gallery -->
+<!-- AdVITya'25 Corporate Chronicles Gallery -->
+<section id="gallery" class="py-24 relative z-10">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-20">
+        <h2 class="text-6xl font-bold mb-8">
+          <span class="gradient-text-feed">AdVITya'25</span>
+          <span class="gradient-text-box">Corporate Chronicles</span>
+        </h2>
+        <p class="text-2xl text-gray-dark max-w-3xl mx-auto">
+          Relive the vibrant moments from our flagship corporate event
+        </p>
+      </div>
+  
+      <!-- Gallery Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Gallery Item -->
+        <div class="relative group overflow-hidden rounded-3xl shadow-lg">
+          <img src="src/WhatsApp Image 2025-09-01 at 23.29.56.jpeg" alt="Corporate Chronicles 1"
+               class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500">
+            <p class="text-white text-2xl font-semibold">Inaugural Ceremony</p>
+          </div>
+        </div>
+  
+        <!-- Gallery Item -->
+        <div class="relative group overflow-hidden rounded-3xl shadow-lg">
+          <img src="src/WhatsApp Image 2025-09-01 at 23.19.55.jpeg" alt="Corporate Chronicles 2"
+               class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500">
+            <p class="text-white text-2xl font-semibold">Keynote Session</p>
+          </div>
+        </div>
+  
+        <!-- Gallery Item -->
+        <div class="relative group overflow-hidden rounded-3xl shadow-lg">
+          <img src="src/WhatsApp Image 2025-09-01 at 23.19.56 (1).jpeg" alt="Corporate Chronicles 3"
+               class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500">
+            <p class="text-white text-2xl font-semibold">Panel Discussion</p>
+          </div>
+        </div>
+  
+        <!-- Gallery Item -->
+        <div class="relative group overflow-hidden rounded-3xl shadow-lg">
+          <img src="src/WhatsApp Image 2025-09-01 at 23.19.57.jpeg" alt="Corporate Chronicles 4"
+               class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500">
+            <p class="text-white text-2xl font-semibold">Networking Moments</p>
+          </div>
+        </div>
+  
+        <!-- Gallery Item -->
+        <div class="relative group overflow-hidden rounded-3xl shadow-lg">
+          <img src="src/WhatsApp Image 2025-09-01 at 23.19.56.jpeg" alt="Corporate Chronicles 5"
+               class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500">
+            <p class="text-white text-2xl font-semibold">Workshop Highlights</p>
+          </div>
+        </div>
+  
+        <!-- Gallery Item -->
+        <div class="relative group overflow-hidden rounded-3xl shadow-lg">
+          <img src="src/WhatsApp Image 2025-09-01 at 23.19.57 (1).jpeg" alt="Corporate Chronicles 6"
+               class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-700">
+          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500">
+            <p class="text-white text-2xl font-semibold">Closing Ceremony</p>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+    <!-- Team List Panel -->
+    <section id="team" class="py-24 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-6xl font-bold mb-8">
+                    <span class="gradient-text-feed">Our Amazing</span> <span class="gradient-text-box">Team</span>
+                </h2>
+                <p class="text-2xl text-gray-dark max-w-4xl mx-auto">
+                    Meet the passionate leaders and innovators who drive FeedBox College Clubs forward
+                </p>
+            </div>
+            
+ <!-- Leadership Team -->
+<div class="mb-24">
+    <h3 class="text-5xl font-bold text-center mb-16" style="color: #29abe2;">Panel</h3>
+    <div class="grid lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+        
+        <!-- Club President -->
+        <div class="team-card glass rounded-3xl p-10 text-center">
+            <img src="src/IMG_20250802_115726 - Srishti Jindal 23bhi10098.jpg" alt="Club President" class="w-32 h-32 rounded-full mx-auto mb-8 object-cover">
+            <h4 class="text-3xl font-bold text-dark mb-3">SRISHTI JINDAL</h4>
+            <p class="text-2xl font-semibold mb-6" style="color: #29abe2;">President</p>
+            <p class="text-gray-dark text-lg leading-relaxed">Great things happen when we work as one</p>
+        </div>
+
+        <!-- Vice President -->
+        <div class="team-card glass rounded-3xl p-10 text-center">
+            <img src="src/IMG_20250419_105416_427 - SAYYED KHALID SAIFULLAH SULEMAN 24MIP10037.webp" alt="Vice President" class="w-32 h-32 rounded-full mx-auto mb-8 object-cover">
+            <h4 class="text-3xl font-bold text-dark mb-3">SAIFULLAH SULEMAN</h4>
+            <p class="text-2xl font-semibold mb-6" style="color: #0171bc;">Vice President</p>
+            <p class="text-gray-dark text-lg leading-relaxed">I am committed to excellence, collaboration, and driving meaningful results</p>
+        </div>
+
+        <!-- General Secretary -->
+        <div class="team-card glass rounded-3xl p-10 text-center">
+            <img src="src/IMG_20241013_200332 - Adithya J 23bai10150.jpg" alt="General Secretary" class="w-32 h-32 rounded-full mx-auto mb-8 object-cover">
+            <h4 class="text-3xl font-bold text-dark mb-3">ADITHYA J</h4>
+            <p class="text-2xl font-semibold mb-6" style="color: #29abe2;">General Secretary</p>
+            <p class="text-gray-dark text-lg leading-relaxed">Dream big, work hard, succeed.</p>
+        </div>
+
+        <!-- Joint Secretary -->
+        <div class="team-card glass rounded-3xl p-10 text-center">
+            <img src="src/IMG-20250610-WA0155 - ANSHIKA MISHRA 24BCY10268.jpg" alt="Joint Secretary" class="w-32 h-32 rounded-full mx-auto mb-8 object-cover">
+            <h4 class="text-3xl font-bold text-dark mb-3">ANSHIKA MISHRA</h4>
+            <p class="text-2xl font-semibold mb-6" style="color: #0171bc;">Joint Secretary</p>
+            <p class="text-gray-dark text-lg leading-relaxed">Ideas take shape and dreams find direction. As Joint Secretary, I strive to make that journey meaningful for every member.</p>
+        </div>
+
+        <!-- Treasurer -->
+        <div class="team-card glass rounded-3xl p-10 text-center">
+            <img src="src/7d68c2a1-34b2-443b-b4ad-34bd8e08bfb5.jpg" alt="Treasurer" class="w-32 h-32 rounded-full mx-auto mb-8 object-cover">
+            <h4 class="text-3xl font-bold text-dark mb-3">ANSHIKA GARG</h4>
+            <p class="text-2xl font-semibold mb-6" style="color: #29abe2;">Treasurer</p>
+            <p class="text-gray-dark text-lg leading-relaxed">Where tech meets finance, with a touch of style</p>
+        </div>
+
+        <!-- Operations Lead -->
+        <div class="team-card glass rounded-3xl p-10 text-center">
+            <img src="src/IMG_20241121_123100 - NIRMALYA DEBIDUTTA DAS 24BAI10176.jpg" alt="Operations Lead" class="w-32 h-32 rounded-full mx-auto mb-8 object-cover">
+            <h4 class="text-3xl font-bold text-dark mb-3">NIRMALYA DEBIDUTTA DAS</h4>
+            <p class="text-2xl font-semibold mb-6" style="color: #0171bc;">Operations Lead</p>
+            <p class="text-gray-dark text-lg leading-relaxed">Operational excellence isn't just about efficiency — it's about creating seamless experiences that empower our team, delight our customers, and drive sustainable growth every single day.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Department Leads (Aligned) -->
+<section id="department-leads" class="py-16">
+    <div class="max-w-auto mx-auto px-4">
+      <h3 class="text-5xl font-bold text-center mb-16" style="color:#0171bc;">Department Leads</h3>
+  
+      <!-- Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- 1: Technical Lead -->
+        <article class="team-card glass rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-sm">
+          <img 
+            src="src/PHOTO-2025-08-31-21-36-33.jpg"
+            alt="Technical Lead — Divyakiran Sahoo"
+            class="w-24 h-24 rounded-full object-cover mb-6 ring-2 ring-[#0171bc]/20"
+            onerror="this.onerror=null;this.src='https://api.dicebear.com/9.x/initials/svg?seed=Divyakiran%20Sahoo';"
+          />
+          <h4 class="text-2xl font-bold tracking-tight mb-1 leading-snug min-h-[2.5rem]">DIVYAKIRAN SAHOO</h4>
+          <p class="text-xl font-semibold mb-3 leading-tight" style="color:#29abe2;">Technical Lead</p>
+          <p class="text-slate-600 leading-relaxed">Coding, AI & Real World Solutions. Be the Trendsetter.</p>
+        </article>
+  
+        <!-- 2: Event Management Lead -->
+        <article class="team-card glass rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-sm">
+          <img 
+            src="src/20250127_141505 - Amritasha Gupta 23bai10048.jpg"
+            alt="Event Management Lead — Amritasha Gupta"
+            class="w-24 h-24 rounded-full object-cover mb-6 ring-2 ring-[#0171bc]/20"
+            onerror="this.onerror=null;this.src='https://api.dicebear.com/9.x/initials/svg?seed=Amritasha%20Gupta';"
+          />
+          <h4 class="text-2xl font-bold tracking-tight mb-1 leading-snug min-h-[2.5rem]">AMRITASHA GUPTA</h4>
+          <p class="text-xl font-semibold mb-3 leading-tight" style="color:#0171bc;">Event Management Lead</p>
+          <p class="text-slate-600 leading-relaxed">Making events better one step at a time.</p>
+        </article>
+  
+        <!-- 3: Content Lead -->
+        <article class="team-card glass rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-sm">
+          <img 
+            src="src/IMG-20250608-WA0021 - Anugya Chaubey 23bai10550.jpg"
+            alt="Content Lead — Anugya Chaubey"
+            class="w-24 h-24 rounded-full object-cover mb-6 ring-2 ring-[#0171bc]/20"
+            onerror="this.onerror=null;this.src='https://api.dicebear.com/9.x/initials/svg?seed=Anugya%20Chaubey';"
+          />
+          <h4 class="text-2xl font-bold tracking-tight mb-1 leading-snug min-h-[2.5rem]">ANUGYA CHAUBEY</h4>
+          <p class="text-xl font-semibold mb-3 leading-tight" style="color:#29abe2;">Content Lead</p>
+          <p class="text-slate-600 leading-relaxed">Live, laugh, love — dang.</p>
+        </article>
+  
+        <!-- 4: R&D Lead -->
+        <article class="team-card glass rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-sm">
+          <img 
+            src="src/IMG-20250822-WA0046 - KARTIK SHRIVASTAVA 24BCE10159.jpg"
+            alt="Research & Development Lead — Kartik Shrivastava"
+            class="w-24 h-24 rounded-full object-cover mb-6 ring-2 ring-[#0171bc]/20"
+            onerror="this.onerror=null;this.src='https://api.dicebear.com/9.x/initials/svg?seed=Kartik%20Shrivastava';"
+          />
+          <h4 class="text-2xl font-bold tracking-tight mb-1 leading-snug min-h-[2.5rem]">KARTIK SHRIVASTAVA</h4>
+          <p class="text-xl font-semibold mb-3 leading-tight" style="color:#0171bc;">Research &amp; Development Lead</p>
+          <p class="text-slate-600 leading-relaxed">Curiosity is my toolkit, innovation my goal.</p>
+        </article>
+  
+  
+        <!-- 7: Marketing & Outreach Lead (placeholder) -->
+        <article class="team-card glass rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-sm">
+          <img 
+            src="src/WhatsApp Image 2025-06-30 at 13.53.35 (2) - Mridul Brahmbhatt 23bai10228.jpeg"
+            alt="Marketing &amp; Outreach Lead"
+            class="w-24 h-24 rounded-full object-cover mb-6 ring-2 ring-[#0171bc]/20"
+            onerror="this.onerror=null;this.src='https://api.dicebear.com/9.x/initials/svg?seed=Marketing%20Lead';"
+          />
+          <h4 class="text-2xl font-bold tracking-tight mb-1 leading-snug min-h-[2.5rem]">MRIDUL BRAHMBHATT</h4>
+          <p class="text-xl font-semibold mb-3 leading-tight" style="color:#29abe2;">Marketing &amp; Outreach Lead</p>
+          <p class="text-slate-600 leading-relaxed">Real confidence and fake confidence are the same confidence</p>
+        </article>
+  
+        <!-- 8: Social Media Lead -->
+        <article class="team-card glass rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-sm">
+          <img 
+            src="src/IMG-20250810-WA0550 - Anju Kumari 23bcy10267.jpg"
+            alt="Social Media Lead — Anju Kumari"
+            class="w-24 h-24 rounded-full object-cover mb-6 ring-2 ring-[#0171bc]/20"
+            onerror="this.onerror=null;this.src='https://api.dicebear.com/9.x/initials/svg?seed=Anju%20Kumari';"
+          />
+          <h4 class="text-2xl font-bold tracking-tight mb-1 leading-snug min-h-[2.5rem]">ANJU KUMARI</h4>
+          <p class="text-xl font-semibold mb-3 leading-tight" style="color:#0171bc;">Social Media Lead</p>
+          <p class="text-slate-600 leading-relaxed">Turning creativity into connections.</p>
+        </article>
+  
+        <!-- 10: HR & Recruitment Lead -->
+        <article class="team-card glass rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-sm">
+          <img 
+            src="src/IMG_20250822_165231 - SAI SIDHARTHA PARIDA 24BCY10329.jpg"
+            alt="HR &amp; Recruitment Lead — Sai Sidharth"
+            class="w-24 h-24 rounded-full object-cover mb-6 ring-2 ring-[#0171bc]/20"
+            onerror="this.onerror=null;this.src='https://api.dicebear.com/9.x/initials/svg?seed=Sai%20Sidharth';"
+          />
+          <h4 class="text-2xl font-bold tracking-tight mb-1 leading-snug min-h-[2.5rem]">SAI SIDHARTH</h4>
+          <p class="text-xl font-semibold mb-3 leading-tight" style="color:#0171bc;">HR &amp; Recruitment Lead</p>
+          <p class="text-slate-600 leading-relaxed">BELIEVE YOU CAN AND YOU ARE HALFWAY THERE</p>
+        </article>
+  
+      </div>
+    </div>
+  </section>
+
+<!-- Co-Leads -->
+<section id="co-leads" class="py-16">
+    <h3 class="text-5xl font-bold text-center mb-12" style="color: #29abe2;">Co-Leads</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Repeat for each co-lead role -->
+
+        <div class="team-card glass rounded-xl p-6 text-center">
+            <img src="src/Snapchat-191213134 - SRISHTI BANSAL 24BCE11420.jpg" alt="Event Co-Lead" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover">
+            <h4 class="text-xl font-bold text-dark mb-2">SRISHTI BANSAL</h4>
+            <p class="font-semibold mb-2" style="color: #0171bc;">Event Management Co-Lead</p>
+            <p class="text-sm text-gray-dark">I strive to turn ideas into unforgettable moments</p>
+        </div>
+
+
+        <div class="team-card glass rounded-xl p-6 text-center">
+            <img src="src/IMG_20250516_232126_316 - DHRITI AGGARWAL 24BAC10069.webp" alt="R&D Co-Lead" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover">
+            <h4 class="text-xl font-bold text-dark mb-2">DHRITI AGGARWAL</h4>
+            <p class="font-semibold mb-2" style="color: #0171bc;">Research & Development Co-Lead</p>
+            <p class="text-sm text-gray-dark">“Experiment. Learn. Repeat."</p>
+        </div>
+
+
+        <div class="team-card glass rounded-xl p-6 text-center">
+            <img src="src/IMG_4806 - YASHIKA RAKESH AGRAWAL 24BBA10033.jpg" alt="Finance Co-Lead" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover">
+            <h4 class="text-xl font-bold text-dark mb-2">YASHIKA RAKESH AGRAWAL</h4>
+            <p class="font-semibold mb-2" style="color: #0171bc;">Finance & Sponsorship Co-Lead</p>
+            <p class="text-sm text-gray-dark">I strive to turn possibilities into opportunities and ensure every step we take creates value for the student community</p>
+        </div>
+
+        <div class="team-card glass rounded-xl p-6 text-center">
+            <img src="src/JashwinSharma_PrAndOutreach - JASHWIN SHARMA 24BCE10459.jpg" alt="Marketing Co-Lead" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover">
+            <h4 class="text-xl font-bold text-dark mb-2">JASHWIN SHARMA</h4>
+            <p class="font-semibold mb-2" style="color: #29abe2;">Marketing & Outreach Co-Lead</p>
+            <p class="text-sm text-gray-dark">Slow goes smooth, smooth goes Fast</p>
+        </div>
+
+        <div class="team-card glass rounded-xl p-6 text-center">
+            <img src="src/PHOTO-2025-09-01-00-25-14.jpg" alt="Social Media Co-Lead" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover">
+            <h4 class="text-xl font-bold text-dark mb-2">NANDINI SRIVASTAVA</h4>
+            <p class="font-semibold mb-2" style="color: #0171bc;">Social Media Co-Lead</p>
+            <p class="text-sm text-gray-dark">I believe in using creativity and strategy to build meaningful connection and create an engaging digital presence that reflects our community’s values and vision.</p>
+        </div>
+
+        <div class="team-card glass rounded-xl p-6 text-center">
+            <img src="src/IMG-20241208-WA0121 - ANANYA PANDEY 24BAI10135.jpg" alt="Design Co-Lead" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover">
+            <h4 class="text-xl font-bold text-dark mb-2">ANANYA PANDEY</h4>
+            <p class="font-semibold mb-2" style="color: #29abe2;">Design Co-Lead</p>
+            <p class="text-sm text-gray-dark">Confidence is real</p>
+        </div>
+
+        <div class="team-card glass rounded-xl p-6 text-center">
+            <img src="src/IMG_20250821_173902 - GAZAL 24BCE11002.jpg" alt="HR Co-Lead" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover">
+            <h4 class="text-xl font-bold text-dark mb-2">GAZAL</h4>
+            <p class="font-semibold mb-2" style="color: #0171bc;">HR & Recruitment Co-Lead</p>
+            <p class="text-sm text-gray-dark">Turning ‘Can I join?’ into ‘Welcome aboard!</p>
+        </div>
+    </div>
+</div>
+    <!-- Footer -->
+    <footer class="py-16 glass relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="mb-8">
+                    <h3 class="text-5xl font-bold mb-4">
+                        <span class="gradient-text-feed">Join</span> <span class="gradient-text-box">FeedBox</span>
+                    </h3>
+                    <p class="text-dark text-xl">Today</p>
+                </div>
+                <p class="text-gray-dark text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Ready to embark on an extraordinary journey? Connect with us and become part of the FeedBox legacy.
+                </p>
+                
+                <!-- Social Media Buttons -->
+                <div class="flex flex-wrap justify-center gap-6 mb-12">
+                    
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/feedboxclg.vitb/" target="_blank" 
+                       class="glass-blue btn-interactive px-8 py-4 rounded-full text-lg font-semibold hover-glow cursor-pointer flex items-center gap-3 text-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.25-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
+                        </svg>
+                        Instagram
+                    </a>
+    
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/company/feedbox-college-club-vit-bhopal/" target="_blank" 
+                       class="glass-blue btn-interactive px-8 py-4 rounded-full text-lg font-semibold hover-glow cursor-pointer flex items-center gap-3 text-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.137 1.445-2.137 2.939v5.667H9.351V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.37-1.852 3.602 0 4.263 2.37 4.263 5.455v6.288zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM6.813 20.452H3.861V9h2.952v11.452z"/>
+                        </svg>
+                        LinkedIn
+                    </a>
+                </div>
+    
+                <!-- Footer Bottom -->
+                <div class="border-t border-gray-300 pt-8">
+                    <p class="text-gray-dark text-lg">&copy; 2025 FeedBox College Clubs. Crafted with passion and innovation.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Calendar generation
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Clear calendar
+            calendar.innerHTML = '';
+            
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'h-16';
+                calendar.appendChild(emptyDay);
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day h-16 flex items-center justify-center text-xl font-semibold cursor-pointer rounded-lg';
+                dayElement.textContent = day;
+                
+                // Highlight special event days
+                if (day === 15 || day === 22 || day === 28) {
+                    dayElement.style.background = '#29abe2';
+                    dayElement.style.color = 'white';
+                    dayElement.classList.add('font-bold');
+                }
+                
+                // Highlight today
+                if (day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                    dayElement.style.border = '3px solid #0171bc';
+                }
+                
+                calendar.appendChild(dayElement);
+            }
+        }
+
+        // Initialize calendar when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCalendar();
+            
+            // Initialize scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections and cards
+            document.querySelectorAll('section, .team-card, .glass').forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // Enhanced button interactions
+        document.querySelectorAll('button, .btn-interactive').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const rect = this.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple effect styles
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = `
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(rippleStyle);
+
+        // Add interactive hover effects for team cards
+        document.querySelectorAll('.team-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.03)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Smooth bubble animation restart
+        setInterval(() => {
+            document.querySelectorAll('.bubble').forEach(bubble => {
+                bubble.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            });
+        }, 15000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'977c594e543f854c',t:'MTc1NjY0MTQzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
